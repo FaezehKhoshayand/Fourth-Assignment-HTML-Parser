@@ -30,19 +30,35 @@ public class Parser {
         return sortedByArea;
     }
 
-    public void setUp() throws IOException {
+    public static void setUp() throws IOException {
 
         //Parse the HTML file using Jsoup
         //TODO
-
-        // Extract data from the HTML
-        //TODO
-
-        // Iterate through each country div to extract country data
-        //TODO
+        String path = "C:\\Users\\BEROOZ\\Desktop\\html\\Fourth-Assignment-HTML-Parser\\src\\Resources\\country-list.html";
+        try {
+            // Extract data from the HTML
+            //TODO
+            File input = new File(path);
+            Document document = Jsoup.parse(input, "UTF-8");
+            Elements countryDivs = document.select("div.country");
+            // Iterate through each country div to extract country data
+            //TODO
+            for (Element countryDiv : countryDivs) {
+                String name = countryDiv.select(".country-name").text();
+                String capital = countryDiv.select(".country-info").text();
+                int population = Integer.parseInt(countryDiv.select(".country-info").select("span.country-population").text());
+                double area = Double.parseDouble(countryDiv.select(".country-info").select("span.country-area").text());
+                countries.add(new Country(name, capital, population, area));
+            }
+        }
+        catch(IOException e) {
+            throw new IOException("File Not Found");
+        }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
+        setUp();
         //you can test your code here before you run the unit tests ;)
+
     }
 }
