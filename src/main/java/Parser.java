@@ -21,7 +21,7 @@ public class Parser {
         List<Country> sortedByPopulation = new ArrayList<>(countries);
         // Sort countries by population (most)
         //TODO
-        Collections.sort(sortedByPopulation,Comparator.comparing(Country :: getPopulation));
+        Collections.sort(sortedByPopulation,Comparator.comparing(Country :: getPopulation).reversed());
         return sortedByPopulation;
     }
 
@@ -29,7 +29,7 @@ public class Parser {
         List<Country> sortedByArea = new ArrayList<>(countries);
         // Sort countries by area (most)
         //TODO
-        Collections.sort(sortedByArea,Comparator.comparing(Country :: getArea));
+        Collections.sort(sortedByArea,Comparator.comparing(Country :: getArea).reversed());
         return sortedByArea;
     }
 
@@ -48,7 +48,7 @@ public class Parser {
             //TODO
             for (Element countryDiv : countryDivs) {
                 String name = countryDiv.select(".country-name").text();
-                String capital = countryDiv.select(".country-info").text();
+                String capital = countryDiv.select(".country-info").select("span.country-capital").text();
                 int population = Integer.parseInt(countryDiv.select(".country-info").select("span.country-population").text());
                 double area = Double.parseDouble(countryDiv.select(".country-info").select("span.country-area").text());
                 Country country = new Country(name, capital, population, area);
@@ -62,8 +62,40 @@ public class Parser {
 
     public static void main(String[] args) throws IOException{
         setUp();
-        for(Country c : countries) {
-            System.out.println(c.getName() + c.getCapital() + c.getPopulation() + c.getArea());
+        Parser parser = new Parser();
+        while(true) {
+            System.out.println("1-Sorted By Name\n2-Sorted By Population\n3-Sorted By Area\n4-Exit");
+            Scanner cmd = new Scanner(System.in);
+            int command = cmd.nextInt();
+            switch(command) {
+                case 1:
+                    List<Country> a = parser.sortByName();
+                    int i = 0;
+                    for(Country c : a) {
+                        System.out.println(i + c.toString());
+                        i++;
+                    }
+                    break;
+                case 2:
+                    List<Country> b = parser.sortByPopulation();
+                    int j = 0;
+                    for(Country c : b) {
+                        System.out.println(j + c.toString());
+                        j++;
+                    }
+                    break;
+                case 3:
+                    List<Country> d = parser.sortByArea();
+                    int k = 0;
+                    for(Country c : d) {
+                        System.out.println(k + c.toString());
+                        k++;
+                    }
+                    break;
+                case 4:
+                    return;
+            }
+
         }
         //you can test your code here before you run the unit tests ;)
 
