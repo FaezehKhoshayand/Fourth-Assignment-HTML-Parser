@@ -5,6 +5,7 @@ import org.jsoup.select.Elements;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.io.FileWriter;
 
 public class Parser {
     static List<Country> countries = new ArrayList<>();
@@ -63,34 +64,44 @@ public class Parser {
     public static void main(String[] args) throws IOException{
         setUp();
         Parser parser = new Parser();
-        while(true) {
+
+        while(true) {//For each selection, it creates a file in addition to printing it on the terminal
             System.out.println("1-Sorted By Name\n2-Sorted By Population\n3-Sorted By Area\n4-Exit");
             Scanner cmd = new Scanner(System.in);
             int command = cmd.nextInt();
             switch(command) {
                 case 1:
                     List<Country> a = parser.sortByName();
+                    FileWriter w = new FileWriter("sortByName.txt");
                     int i = 0;
                     for(Country c : a) {
+                        w.write(i + c.toString() + "\n");
                         System.out.println(i + c.toString());
                         i++;
                     }
+                    w.close();
                     break;
                 case 2:
                     List<Country> b = parser.sortByPopulation();
+                    FileWriter r = new FileWriter("sortByPopulation.txt");
                     int j = 0;
                     for(Country c : b) {
+                        r.write(j + c.toString() + "\n");
                         System.out.println(j + c.toString());
                         j++;
                     }
+                    r.close();
                     break;
                 case 3:
                     List<Country> d = parser.sortByArea();
+                    FileWriter t = new FileWriter("sortByArea.txt");
                     int k = 0;
                     for(Country c : d) {
+                        t.write(k + c.toString() + "\n");
                         System.out.println(k + c.toString());
                         k++;
                     }
+                    t.close();
                     break;
                 case 4:
                     return;
