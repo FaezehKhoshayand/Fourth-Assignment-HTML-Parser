@@ -13,6 +13,7 @@ public class Parser {
         List<Country> sortedByName = new ArrayList<>(countries);
         // Sort countries alphabetically (least)
         //TODO
+        Collections.sort(sortedByName,Comparator.comparing(Country :: getName));
         return  sortedByName;
     }
 
@@ -20,6 +21,7 @@ public class Parser {
         List<Country> sortedByPopulation = new ArrayList<>(countries);
         // Sort countries by population (most)
         //TODO
+        Collections.sort(sortedByPopulation,Comparator.comparing(Country :: getPopulation));
         return sortedByPopulation;
     }
 
@@ -27,6 +29,7 @@ public class Parser {
         List<Country> sortedByArea = new ArrayList<>(countries);
         // Sort countries by area (most)
         //TODO
+        Collections.sort(sortedByArea,Comparator.comparing(Country :: getArea));
         return sortedByArea;
     }
 
@@ -48,7 +51,8 @@ public class Parser {
                 String capital = countryDiv.select(".country-info").text();
                 int population = Integer.parseInt(countryDiv.select(".country-info").select("span.country-population").text());
                 double area = Double.parseDouble(countryDiv.select(".country-info").select("span.country-area").text());
-                countries.add(new Country(name, capital, population, area));
+                Country country = new Country(name, capital, population, area);
+                countries.add(country);
             }
         }
         catch(IOException e) {
@@ -58,6 +62,9 @@ public class Parser {
 
     public static void main(String[] args) throws IOException{
         setUp();
+        for(Country c : countries) {
+            System.out.println(c.getName() + c.getCapital() + c.getPopulation() + c.getArea());
+        }
         //you can test your code here before you run the unit tests ;)
 
     }
